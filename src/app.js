@@ -14,13 +14,13 @@ class App extends Component {
     todos: []
   }
 
-  componentDidMount() {
+  componentMounted() {
     axios.get('https://jsonplaceholder.typicode.com/todos?_limit=0')
       .then(res => this.setState({ todos: res.data }))
   }
 
-  //Toggle Complete
-  markComplete = (id) => {
+  
+  toggleComplete = (id) => {
     this.setState({ todos: this.state.todos.map(todo => {
      if(todo.id === id) {
        todo.completed = !todo.completed
@@ -29,15 +29,15 @@ class App extends Component {
     })  });
   }
 
-  // Delete Todo
-  delTodo = (id) => {
+  
+  deleTodo = (id) => {
     axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
       .then(res => this.setState({ todos: [...this.state.todos.filter
       (todo => todo.id!== id)] }));
     
   }
 
-  // Add Todo
+  
   addTodo = (title) => {
     axios.post('https://jsonplaceholder.typicode.com/todos', {
       title,
