@@ -15,6 +15,12 @@ class App extends Component {
         newTodoDescription: ''
      };
    }
+   
+   deleteTodo(index) {
+        const list = this.state.todos.slice();
+        const newList = list.filter((todo, i) => i !== index);
+        this.setState({ todos: newList });
+   }
  
    handleChange(e) {
      this.setState({ newTodoDescription: e.target.value })
@@ -35,21 +41,29 @@ class App extends Component {
   }
 
    render() {
-     return (
-       <div className="App">
-          <ul>
-          { this.state.todos.map( (todo, index) => 
-            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted }toggleComplete={ () => this.toggleComplete(index) } />
-          )}
-        </ul>
-        <form onSubmit={ (e) => this.handleSubmit(e) }>
-           <input type="text" value={ this.state.newTodoDescription } onChange={ (e) => this.handleChange(e) } />
-           <input type="submit" />
-        </form>
-       </div>
-     );
-   }
- }
+        return (
+            <div className="App">
+                <h1>The To Do List</h1>
+                <ol>
+                    {this.state.todos.map((todo, index) =>
+                        <ToDo
+                            key={index}
+                            description={todo.description}
+                            isCompleted={todo.isCompleted}
+                            toggleComplete={() => this.toggleComplete(index)}
+                            deleteTodo={() => this.deleteTodo(index)}
+                        />
+                    )}
+                </ol>
+                <form onSubmit={(e) => this.handleSubmit(e)} >
+                    <input type="text" placeholder="Insert To Do's Here" value={this.state.newTodoDescription} onChange={(e) => this.handleChange(e)} />
+                    <input type="submit" value="Add" />
+                </form>
+
+            </div>
+        );
+    }
+}
 
  export default App;
 
